@@ -42,14 +42,10 @@ ResultIndeces findIndecesForMaximumValueOfOneDividedByAPreviusOne(int* arr, int3
 		else {
 			result.High = 0;
 			result.Low = 1;
-			result.Numerator = 0;
-			result.Denominator = 1;
+			result.Numerator = 1;
+			result.Denominator = 0;
 		}
 		return result;
-	}
-	if (N <= 1) {
-		std::cout << "ERROR: N <= 1\n";
-		return ResultIndeces() = {0,0,0,0};
 	}
 	ResultIndeces result;
 	ResultIndeces result_l = findIndecesForMaximumValueOfOneDividedByAPreviusOne(arr, N / 2);
@@ -94,7 +90,7 @@ int main() {
 	}*/
 
 	for (int32_t i = 0; i < ARRAY_SIZE; ++i) {
-		a[i] = ARRAY_SIZE - i + 1;
+		a[i] = ARRAY_SIZE - i;
 	}
 
 	for (int32_t i = 0; i < ARRAY_SIZE; ++i) {
