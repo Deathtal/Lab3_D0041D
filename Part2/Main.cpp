@@ -1,7 +1,7 @@
 #include <iostream>
 
-const static int32_t ARRAY_SIZE = 9;
-const static int32_t MAX_RAND_VALUE = 100;
+const static int32_t ARRAY_SIZE = 1000;
+const static int32_t MAX_RAND_VALUE = 1000;
 
 struct ResultIndeces {
 	int32_t High;
@@ -48,8 +48,8 @@ ResultIndeces findIndecesForMaximumValueOfOneDividedByAPreviusOne(int* arr, int3
 		return result;
 	}
 	ResultIndeces result;
-	ResultIndeces result_l = findIndecesForMaximumValueOfOneDividedByAPreviusOne(arr, N / 2);
-	ResultIndeces result_r = findIndecesForMaximumValueOfOneDividedByAPreviusOne(arr + N / 2, N - N / 2);
+	ResultIndeces result_l = findIndecesForMaximumValueOfOneDividedByAPreviusOne(arr, N / 2); // left half
+	ResultIndeces result_r = findIndecesForMaximumValueOfOneDividedByAPreviusOne(arr + N / 2, N - N / 2); // right half
 	result.High = arr[result_l.High] > arr[(result_r.High += N / 2)] ? result_l.High : result_r.High;
 	result.Low = arr[result_l.Low] <= arr[(result_r.Low += N / 2)] ? result_l.Low : result_r.Low;
 
@@ -85,22 +85,14 @@ ResultIndeces findIndecesForMaximumValueOfOneDividedByAPreviusOne(int* arr, int3
 int main() {
 	int a[ARRAY_SIZE];
 
-	/*for (int& i : a) {
-		i = rand() % ARRAY_SIZE + 1;
-	}*/
-
-	for (int32_t i = 0; i < ARRAY_SIZE; ++i) {
-		a[i] = ARRAY_SIZE - i;
-	}
-
-	for (int32_t i = 0; i < ARRAY_SIZE; ++i) {
-		std::cout << i << ": " << a[i] << "\n";
+	for (int& i : a) { // Fill the array with random values
+		i = rand() % (MAX_RAND_VALUE + 1);
 	}
 
 	ResultIndeces result = findIndecesForMaximumValueOfOneDividedByAPreviusOne(a, ARRAY_SIZE);
 
-	std::cout << "\nHigh: index: " << result.High << ", value: " << a[result.High];
-	std::cout << "\nLow: index: " << result.Low << ", value: " << a[result.Low];
-	std::cout << "\nNumerator index: " << result.Numerator << ", Denominator index: " << result.Denominator << "\n";
-	std::cout << a[result.Numerator] << "/" << a[result.Denominator] << " = " << (double)a[result.Numerator] / (double)a[result.Denominator];
+	std::cout << "\nHigh:\n\tindex: " << result.High << ", value: " << a[result.High];
+	std::cout << "\n\nLow:\n\tindex: " << result.Low << ", value: " << a[result.Low];
+	std::cout << "\n\nNumerator index: " << result.Numerator << ", Denominator index: " << result.Denominator << "\n";
+	std::cout << a[result.Numerator] << " / " << a[result.Denominator] << " = " << (double)a[result.Numerator] / (double)a[result.Denominator];
 }
